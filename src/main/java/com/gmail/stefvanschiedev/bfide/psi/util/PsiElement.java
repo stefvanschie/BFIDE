@@ -1,5 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi.util;
 
+import com.gmail.stefvanschiedev.bfide.execution.CodeExecution;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Base class for all psi elements
  */
-public class PsiElement {
+public abstract class PsiElement {
 
     /**
      * Parent element
@@ -56,4 +57,11 @@ public class PsiElement {
     public PsiElement[] getChildren() {
         return children;
     }
+
+    /**
+     * Specifies the behaviour when this piece of code is run.
+     *
+     * @param execution the code execution environment
+     */
+    public abstract void execute(CodeExecution execution);
 }

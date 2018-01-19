@@ -1,5 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
+import com.gmail.stefvanschiedev.bfide.execution.CodeExecution;
 import com.gmail.stefvanschiedev.bfide.psi.builder.PsiBuilder;
 import com.gmail.stefvanschiedev.bfide.psi.util.PsiElement;
 import com.gmail.stefvanschiedev.bfide.psi.util.PsiElementFactory;
@@ -15,6 +16,9 @@ public class PsiLoopElement extends PsiElement {
     public PsiLoopElement(TextRange range, PsiElement parent) {
         super(range, parent);
     }
+
+    @Override
+    public void execute(CodeExecution execution) {}
 
     @Override
     public String toString() {

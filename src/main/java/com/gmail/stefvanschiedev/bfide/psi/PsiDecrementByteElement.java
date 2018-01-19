@@ -1,5 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
+import com.gmail.stefvanschiedev.bfide.execution.CodeExecution;
 import com.gmail.stefvanschiedev.bfide.psi.builder.PsiBuilder;
 import com.gmail.stefvanschiedev.bfide.psi.util.PsiElement;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
@@ -11,6 +12,11 @@ public class PsiDecrementByteElement extends PsiElement {
 
     public PsiDecrementByteElement(TextRange range, PsiElement parent) {
         super(range, parent);
+    }
+
+    @Override
+    public void execute(CodeExecution execution) {
+        execution.decrementByte();
     }
 
     @Override
