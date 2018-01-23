@@ -1,6 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
-import com.gmail.stefvanschiedev.bfide.execution.CodeExecution;
+import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import com.gmail.stefvanschiedev.bfide.psi.builder.PsiBuilder;
 import com.gmail.stefvanschiedev.bfide.psi.util.PsiElement;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
@@ -15,8 +15,13 @@ public class PsiIncrementByteElement extends PsiElement {
     }
 
     @Override
-    public void execute(CodeExecution execution) {
-        execution.incrementByte();
+    public int execute(long[] cells, int pointer, RunConfiguration configuration) {
+        cells[pointer]++;
+    
+        if (cells[pointer] > configuration.getCellSizeMax())
+            cells[pointer] = configuration.getCellSizeMin();
+        
+        return pointer;
     }
 
     @Override

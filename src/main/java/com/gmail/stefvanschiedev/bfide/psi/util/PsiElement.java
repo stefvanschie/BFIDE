@@ -1,6 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi.util;
 
-import com.gmail.stefvanschiedev.bfide.execution.CodeExecution;
+import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
 
 import java.util.ArrayList;
@@ -46,9 +46,9 @@ public abstract class PsiElement {
      * @param element the child to add
      */
     public void addChild(PsiElement element) {
-        List<PsiElement> childs = new ArrayList<>(Arrays.asList(children));
-        childs.add(element);
-        children = childs.toArray(new PsiElement[childs.size()]);
+        List<PsiElement> children = new ArrayList<>(Arrays.asList(this.children));
+        children.add(element);
+        this.children = children.toArray(new PsiElement[children.size()]);
     }
 
     /**
@@ -61,7 +61,10 @@ public abstract class PsiElement {
     /**
      * Specifies the behaviour when this piece of code is run.
      *
-     * @param execution the code execution environment
+     * @param cells the cells (its content is mutable)
+     * @param pointer the pointer
+     * @param configuration the run configuration
+     * @return the new pointer (which can be the same as the pointer parameter)
      */
-    public abstract void execute(CodeExecution execution);
+    public abstract int execute(long[] cells, int pointer, RunConfiguration configuration);
 }

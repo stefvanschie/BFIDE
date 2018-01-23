@@ -1,12 +1,10 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
-import com.gmail.stefvanschiedev.bfide.execution.CodeExecution;
+import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import com.gmail.stefvanschiedev.bfide.psi.builder.PsiBuilder;
 import com.gmail.stefvanschiedev.bfide.psi.util.PsiElement;
 import com.gmail.stefvanschiedev.bfide.psi.util.PsiElementFactory;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
-
-import java.util.regex.Pattern;
 
 /**
  * Represent a looping structure in BrainFuck
@@ -18,7 +16,14 @@ public class PsiLoopElement extends PsiElement {
     }
 
     @Override
-    public void execute(CodeExecution execution) {}
+    public int execute(long[] cells, int pointer, RunConfiguration configuration) {
+        while (cells[pointer] != 0) {
+            for (PsiElement child : getChildren())
+                pointer = child.execute(cells, pointer, configuration);
+        }
+        
+        return pointer;
+    }
 
     @Override
     public String toString() {
