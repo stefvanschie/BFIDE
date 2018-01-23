@@ -1,9 +1,11 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
-import com.gmail.stefvanschiedev.bfide.execution.CodeExecution;
+import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import com.gmail.stefvanschiedev.bfide.psi.builder.PsiBuilder;
 import com.gmail.stefvanschiedev.bfide.psi.util.PsiElement;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
+
+import java.util.Scanner;
 
 /**
  * Represents an input byte instruction in BrainFuck
@@ -15,8 +17,9 @@ public class PsiInputByteElement extends PsiElement {
     }
 
     @Override
-    public void execute(CodeExecution execution) {
-        execution.inputByte();
+    public int execute(long[] cells, int pointer, RunConfiguration configuration) {
+        cells[pointer] = new Scanner(System.in).next(".").charAt(0);
+        return pointer;
     }
 
     @Override
