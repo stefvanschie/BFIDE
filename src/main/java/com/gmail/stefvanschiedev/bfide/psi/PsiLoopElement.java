@@ -21,7 +21,7 @@ public class PsiLoopElement extends PsiElement {
             for (PsiElement child : getChildren())
                 pointer = child.execute(cells, pointer, configuration);
         }
-        
+
         return pointer;
     }
 
@@ -41,54 +41,34 @@ public class PsiLoopElement extends PsiElement {
     public static class Builder implements PsiBuilder<PsiLoopElement> {
 
         @Override
-        public boolean isParsable(String text) {
-            if (!text.startsWith("["))
-                return false;
-
-            int brackets = 0;
-
-            for (char c : text.toCharArray()) {
-                if (c == '[')
-                    brackets++;
-                else if (c == ']') {
-                    brackets--;
-
-                    if (brackets == 0)
-                        break;
-                }
-            }
-
-            return brackets == 0;
-        }
-
-        @Override
         public int parse(String text, int offset, PsiElement parent) {
-            //-1 because it will match the first one as well
+            if (!text.startsWith("["))
+                return -1;
+
             int brackets = 0;
-            int length = 0;
+            for (int length = 1; length <= text.length(); length++) {
+                char character = text.charAt(length - 1);
 
-            for (char c : text.toCharArray()) {
-                length++;
-
-                if (c == '[')
+                if (character == '[') {
                     brackets++;
-                else if (c == ']') {
-                    brackets--;
-
-                    if (brackets == 0) {
-                        PsiLoopElement element = new PsiLoopElement(new TextRange(offset, length), parent);
-
-                        PsiElementFactory.INSTANCE.parseText(text.substring(1, length - 1), offset + 1,
-                                element);
-
-                        parent.addChild(element);
-
-                        break;
-                    }
+                    continue;
                 }
+
+                if (character == ']')
+                    brackets--;
+                else
+                    continue;
+
+                if (brackets != 0)
+                    continue;
+
+                PsiLoopElement element = new PsiLoopElement(new TextRange(offset, length), parent);
+                PsiElementFactory.INSTANCE.parseText(text.substring(1, length - 1), offset + 1, element);
+                parent.addChild(element);
+                return length;
             }
 
-            return length;
+            return -1;
         }
     }
 }

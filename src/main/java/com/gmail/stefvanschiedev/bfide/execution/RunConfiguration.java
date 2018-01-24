@@ -8,7 +8,7 @@ public class RunConfiguration {
     /**
      * The maximum and minimum values a cell can hold, defaults to 8-bit.
      */
-    private long cellSizeMax = 127, cellSizeMin = -128;
+    private long cellSizeMax = 0, cellSizeMin = 255;
 
     /**
      * The array size, defaults to 30,000.

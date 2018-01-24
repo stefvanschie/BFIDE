@@ -37,33 +37,17 @@ public class PsiCommentElement extends PsiElement {
      */
     public static class Builder implements PsiBuilder<PsiCommentElement> {
 
-        private Pattern pattern = Pattern.compile("[^><+\\-.,\\[\\]]+");
-
-        @Override
-        public boolean isParsable(String text) {
-            Matcher matcher = pattern.matcher(text);
-
-            while (matcher.find()) {
-                if (matcher.start() == 0)
-                    return true;
-            }
-
-            return false;
-        }
+        private static final Pattern PATTERN = Pattern.compile("[^><+\\-.,\\[\\]]+");
 
         @Override
         public int parse(String text, int offset, PsiElement parent) {
-            Matcher matcher = pattern.matcher(text);
+            Matcher matcher = PATTERN.matcher(text);
+            if (!matcher.find() || matcher.start() != 0)
+                return -1;
 
-            while (matcher.find()) {
-                if (matcher.start() == 0) {
-                    parent.addChild(new PsiCommentElement(new TextRange(offset, offset + matcher.end()), parent,
-                            text.substring(0, matcher.end())));
-                    return matcher.end();
-                }
-            }
-
-            throw new IllegalStateException("Unexpected end of method");
+            parent.addChild(new PsiCommentElement(new TextRange(offset, offset + matcher.end()), parent,
+                    text.substring(0, matcher.end())));
+            return matcher.end();
         }
     }
 }
