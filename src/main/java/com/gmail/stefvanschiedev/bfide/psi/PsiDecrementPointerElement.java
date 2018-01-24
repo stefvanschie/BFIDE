@@ -35,12 +35,10 @@ public class PsiDecrementPointerElement extends PsiElement {
     public static class Builder implements PsiBuilder<PsiDecrementPointerElement> {
 
         @Override
-        public boolean isParsable(String text) {
-            return text.startsWith("<");
-        }
-
-        @Override
         public int parse(String text, int offset, PsiElement parent) {
+            if (!text.startsWith("<"))
+                return -1;
+
             parent.addChild(new PsiDecrementPointerElement(new TextRange(offset, offset + 1), parent));
 
             return 1;

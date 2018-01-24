@@ -35,12 +35,10 @@ public class PsiIncrementByteElement extends PsiElement {
     public static class Builder implements PsiBuilder<PsiIncrementByteElement> {
 
         @Override
-        public boolean isParsable(String text) {
-            return text.startsWith("+");
-        }
-
-        @Override
         public int parse(String text, int offset, PsiElement parent) {
+            if (!text.startsWith("+"))
+                return -1;
+
             parent.addChild(new PsiIncrementByteElement(new TextRange(offset, offset + 1), parent));
 
             return 1;

@@ -35,25 +35,23 @@ public class PsiElementFactory {
      * @param parent the parent element
      */
     public void parseText(String text, int offset, PsiElement parent) {
-        //safety catch for incorrect input
-        String prevText = text;
+        int prevLength = text.length();
 
         while (!text.isEmpty()) {
             for (PsiBuilder<?> builder : builders) {
-                if (!builder.isParsable(text))
-                    continue;
-
                 int length = builder.parse(text, offset, parent);
+                if (length == -1)
+                    continue;
 
                 text = text.substring(length);
                 offset += length;
                 break;
             }
 
-            if (prevText.equals(text))
+            if (prevLength == text.length())
                 throw new IllegalArgumentException("Incorrect text, unable to parse");
 
-            prevText = text;
+            prevLength = text.length();
         }
     }
 }
