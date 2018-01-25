@@ -1,21 +1,17 @@
-package com.gmail.stefvanschiedev.bfide.psi.util;
+package com.gmail.stefvanschiedev.bfide.psi;
 
-import com.gmail.stefvanschiedev.bfide.psi.*;
-import com.gmail.stefvanschiedev.bfide.psi.builder.PsiBuilder;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * A factory for parsing BrainFuck code into a psi
  */
 public class PsiElementFactory {
 
-    /**
-     * The instance of this class
-     */
     public static final PsiElementFactory INSTANCE = new PsiElementFactory();
 
-    /**
-     * An array of all possible builders
-     */
     private final PsiBuilder<?>[] builders = new PsiBuilder<?>[] {
             new PsiCommentElement.Builder(),
             new PsiDecrementByteElement.Builder(),
@@ -32,14 +28,17 @@ public class PsiElementFactory {
      *
      * @param text the text to parse
      * @param offset the current offset of the text
-     * @param parent the parent element
+     * @param parent the parent of the elements being parsed or null, if the element is top-level one
+     * @param holder the holder of the newly parsed elements; its children will be overridden.
+     * In case of a {@link PsiLoopElement}, the parent and the holder are the same
      */
-    public void parseText(String text, int offset, PsiElement parent) {
+    public void parseText(String text, int offset, @Nullable PsiElement parent, PsiElementHolder holder) {
         int prevLength = text.length();
+        Queue<PsiElement> parsed = new LinkedList<>();
 
         while (!text.isEmpty()) {
             for (PsiBuilder<?> builder : builders) {
-                int length = builder.parse(text, offset, parent);
+                int length = builder.parse(text, offset, parent, parsed);
                 if (length == -1)
                     continue;
 
@@ -53,5 +52,7 @@ public class PsiElementFactory {
 
             prevLength = text.length();
         }
+
+        holder.setChildren(parsed.toArray(new PsiElement[parsed.size()]));
     }
 }
