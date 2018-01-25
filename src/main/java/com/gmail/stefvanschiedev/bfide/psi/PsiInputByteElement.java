@@ -1,11 +1,11 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
-import com.gmail.stefvanschiedev.bfide.psi.builder.PsiBuilder;
-import com.gmail.stefvanschiedev.bfide.psi.util.PsiElement;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Scanner;
+import java.io.IOException;
+import java.util.Queue;
 
 /**
  * Represents an input byte instruction in BrainFuck
@@ -18,8 +18,19 @@ public class PsiInputByteElement extends PsiElement {
 
     @Override
     public int execute(long[] cells, int pointer, RunConfiguration configuration) {
-        cells[pointer] = new Scanner(System.in).next(".").charAt(0);
-        return pointer;
+        try {
+            int input = configuration.getInput().read();
+            if (configuration.getMaxCellValue() < Byte.MAX_VALUE) {
+                //The cell values are in the signed byte range,
+                //therefore put the input in the signed byte range as well
+                input -= Byte.MIN_VALUE;
+            }
+
+            cells[pointer] = input;
+            return pointer;
+        } catch (IOException e) {
+            throw new RuntimeException("Error while reading input", e);
+        }
     }
 
     @Override
@@ -27,18 +38,14 @@ public class PsiInputByteElement extends PsiElement {
         return ",";
     }
 
-    /**
-     * A builder for this element
-     */
     public static class Builder implements PsiBuilder<PsiInputByteElement> {
 
         @Override
-        public int parse(String text, int offset, PsiElement parent) {
+        public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {
             if (!text.startsWith(","))
                 return -1;
 
-            parent.addChild(new PsiInputByteElement(new TextRange(offset, offset + 1), parent));
-
+            holder.add(new PsiInputByteElement(new TextRange(offset, offset + 1), parent));
             return 1;
         }
     }

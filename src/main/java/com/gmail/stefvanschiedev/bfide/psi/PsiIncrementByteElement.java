@@ -1,9 +1,10 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
-import com.gmail.stefvanschiedev.bfide.psi.builder.PsiBuilder;
-import com.gmail.stefvanschiedev.bfide.psi.util.PsiElement;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Queue;
 
 /**
  * Represent an increment byte instruction in BrainFuck
@@ -17,10 +18,10 @@ public class PsiIncrementByteElement extends PsiElement {
     @Override
     public int execute(long[] cells, int pointer, RunConfiguration configuration) {
         cells[pointer]++;
-    
-        if (cells[pointer] > configuration.getCellSizeMax())
-            cells[pointer] = configuration.getCellSizeMin();
-        
+
+        if (cells[pointer] > configuration.getMaxCellValue())
+            cells[pointer] = configuration.getMinCellValue();
+
         return pointer;
     }
 
@@ -29,18 +30,14 @@ public class PsiIncrementByteElement extends PsiElement {
         return "+";
     }
 
-    /**
-     * A builder for this element
-     */
     public static class Builder implements PsiBuilder<PsiIncrementByteElement> {
 
         @Override
-        public int parse(String text, int offset, PsiElement parent) {
+        public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {
             if (!text.startsWith("+"))
                 return -1;
 
-            parent.addChild(new PsiIncrementByteElement(new TextRange(offset, offset + 1), parent));
-
+            holder.add(new PsiIncrementByteElement(new TextRange(offset, offset + 1), parent));
             return 1;
         }
     }

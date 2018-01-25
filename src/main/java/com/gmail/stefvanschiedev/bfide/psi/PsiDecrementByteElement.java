@@ -1,12 +1,13 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
-import com.gmail.stefvanschiedev.bfide.psi.builder.PsiBuilder;
-import com.gmail.stefvanschiedev.bfide.psi.util.PsiElement;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Queue;
 
 /**
- * Represents a decrement byte instruction in BrainFuck.
+ * Represents a decrement byte instruction in BrainFuck
  */
 public class PsiDecrementByteElement extends PsiElement {
 
@@ -17,10 +18,10 @@ public class PsiDecrementByteElement extends PsiElement {
     @Override
     public int execute(long[] cells, int pointer, RunConfiguration configuration) {
         cells[pointer]--;
-    
-        if (cells[pointer] < configuration.getCellSizeMin())
-            cells[pointer] = configuration.getCellSizeMax();
-        
+
+        if (cells[pointer] < configuration.getMinCellValue())
+            cells[pointer] = configuration.getMaxCellValue();
+
         return pointer;
     }
 
@@ -29,18 +30,14 @@ public class PsiDecrementByteElement extends PsiElement {
         return "-";
     }
 
-    /**
-     * A builder for this element
-     */
     public static class Builder implements PsiBuilder<PsiDecrementByteElement> {
 
         @Override
-        public int parse(String text, int offset, PsiElement parent) {
+        public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {
             if (!text.startsWith("-"))
                 return -1;
 
-            parent.addChild(new PsiDecrementByteElement(new TextRange(offset, offset + 1), parent));
-
+            holder.add(new PsiDecrementByteElement(new TextRange(offset, offset + 1), parent));
             return 1;
         }
     }
