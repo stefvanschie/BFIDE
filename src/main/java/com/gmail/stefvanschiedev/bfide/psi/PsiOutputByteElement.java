@@ -4,7 +4,8 @@ import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import com.gmail.stefvanschiedev.bfide.utils.TextRange;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.PrintStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Queue;
 
 /**
@@ -18,10 +19,22 @@ public class PsiOutputByteElement extends PsiElement {
 
     @Override
     public int execute(long[] cells, int pointer, RunConfiguration configuration) {
-        PrintStream output = configuration.getOutput();
-        output.print((char)cells[pointer]);
-        output.flush();
-        return pointer;
+        long value = cells[pointer];
+        if (configuration.getMaxCellValue() < 255) {
+            //The cell values are in the signed byte range,
+            //therefore move the output into unsigned byte range
+            value += 128;
+        } else if (configuration.getMaxCellValue() > 255)
+            value %= 256;
+
+        try {
+            OutputStream output = configuration.getOutput();
+            output.write((int)value);
+            output.flush();
+            return pointer;
+        } catch (IOException e) {
+            throw new RuntimeException("Error while writing output", e);
+        }
     }
 
     @Override

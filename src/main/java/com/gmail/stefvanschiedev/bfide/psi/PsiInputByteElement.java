@@ -20,10 +20,10 @@ public class PsiInputByteElement extends PsiElement {
     public int execute(long[] cells, int pointer, RunConfiguration configuration) {
         try {
             int input = configuration.getInput().read();
-            if (configuration.getMaxCellValue() < Byte.MAX_VALUE) {
+            if (configuration.getMaxCellValue() < 255) {
                 //The cell values are in the signed byte range,
                 //therefore put the input in the signed byte range as well
-                input -= Byte.MIN_VALUE;
+                input -= 128;
             }
 
             cells[pointer] = input;

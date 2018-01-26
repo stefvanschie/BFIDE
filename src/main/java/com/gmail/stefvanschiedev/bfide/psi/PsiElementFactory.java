@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * A factory for parsing BrainFuck code into a psi
+ * A thread safe factory for parsing BrainFuck code into a psi
  */
 public class PsiElementFactory {
 
@@ -29,10 +29,9 @@ public class PsiElementFactory {
      * @param text the text to parse
      * @param offset the current offset of the text
      * @param parent the parent of the elements being parsed or null, if the element is top-level one
-     * @param holder the holder of the newly parsed elements; its children will be overridden.
-     * In case of a {@link PsiLoopElement}, the parent and the holder are the same
+     * @return the newly parsed elements
      */
-    public void parseText(String text, int offset, @Nullable PsiElement parent, PsiElementHolder holder) {
+    public PsiElement[] parseText(String text, int offset, @Nullable PsiElement parent) {
         int prevLength = text.length();
         Queue<PsiElement> parsed = new LinkedList<>();
 
@@ -53,6 +52,6 @@ public class PsiElementFactory {
             prevLength = text.length();
         }
 
-        holder.setChildren(parsed.toArray(new PsiElement[parsed.size()]));
+        return parsed.toArray(new PsiElement[parsed.size()]);
     }
 }
