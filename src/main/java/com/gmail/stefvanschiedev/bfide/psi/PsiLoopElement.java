@@ -9,7 +9,7 @@ import java.util.Queue;
 /**
  * Represent a looping structure in BrainFuck
  */
-public class PsiLoopElement extends PsiElement implements PsiElementHolder {
+public class PsiLoopElement extends PsiElement {
 
     private PsiElement[] children;
 
@@ -18,19 +18,9 @@ public class PsiLoopElement extends PsiElement implements PsiElementHolder {
     }
 
     @Override
-    public void setChildren(PsiElement[] children) {
-        this.children = children;
-    }
-
-    @Override
-    public PsiElement[] getChildren() {
-        return children;
-    }
-
-    @Override
     public int execute(long[] cells, int pointer, RunConfiguration configuration) {
         while (cells[pointer] != 0) {
-            for (PsiElement child : getChildren())
+            for (PsiElement child : children)
                 pointer = child.execute(cells, pointer, configuration);
         }
 
@@ -41,7 +31,7 @@ public class PsiLoopElement extends PsiElement implements PsiElementHolder {
     public String toString() {
         StringBuilder builder = new StringBuilder("[");
 
-        for (PsiElement element : getChildren())
+        for (PsiElement element : children)
             builder.append(element);
 
         return builder.append("]").toString();
@@ -74,7 +64,8 @@ public class PsiLoopElement extends PsiElement implements PsiElementHolder {
                 PsiLoopElement element = new PsiLoopElement(new TextRange(offset, length), parent);
                 holder.add(element);
 
-                PsiElementFactory.INSTANCE.parseText(text.substring(1, length - 1), offset + 1, element, element);
+                element.children = PsiElementFactory.INSTANCE.parseText(text.substring(1, length - 1),
+                        offset + 1, element);
                 return length;
             }
 

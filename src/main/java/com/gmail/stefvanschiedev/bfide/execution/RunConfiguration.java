@@ -1,7 +1,7 @@
 package com.gmail.stefvanschiedev.bfide.execution;
 
 import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.OutputStream;
 
 /**
  * A configuration on how the code should be executed
@@ -11,18 +11,18 @@ public class RunConfiguration {
     private final CellValueRange cellValueRange;
     private final int cellCount;
     private final InputStream input;
-    private final PrintStream output;
+    private final OutputStream output;
 
     /**
      * Create a new configuration
      *
      * @param cellValueRange the range of the cells' valid values
      * @param cellCount the count of cells
-     * @param input the input for the input operation
-     * @param output the output for the output operation (auto-flush isn't required)
+     * @param input the input for the input instruction
+     * @param output the output for the output instruction (auto-flush isn't required)
      */
     public RunConfiguration(CellValueRange cellValueRange, int cellCount,
-                            InputStream input, PrintStream output) {
+                            InputStream input, OutputStream output) {
         this.cellValueRange = cellValueRange;
         this.cellCount = cellCount;
         this.input = input;
@@ -51,16 +51,16 @@ public class RunConfiguration {
     }
 
     /**
-     * @return the input for the input operation (System.in by default)
+     * @return the input for the input instruction (System.in by default)
      */
     public InputStream getInput() {
         return input;
     }
 
     /**
-     * @return the output for the output operation (System.out by default)
+     * @return the output for the output instruction (System.out by default)
      */
-    public PrintStream getOutput() {
+    public OutputStream getOutput() {
         return output;
     }
 
@@ -71,7 +71,7 @@ public class RunConfiguration {
         private CellValueRange cellValueRange = CellValueRange.UNSIGNED_BYTE;
         private int cellCount = 30000;
         private InputStream input = System.in;
-        private PrintStream output = System.out;
+        private OutputStream output = System.out;
 
         public RunConfiguration build() {
             return new RunConfiguration(cellValueRange, cellCount, input, output);
@@ -92,7 +92,7 @@ public class RunConfiguration {
             return this;
         }
 
-        public Builder setOutput(PrintStream output) {
+        public Builder setOutput(OutputStream output) {
             this.output = output;
             return this;
         }

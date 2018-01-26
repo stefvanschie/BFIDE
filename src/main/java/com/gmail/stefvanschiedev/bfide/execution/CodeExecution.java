@@ -1,34 +1,42 @@
 package com.gmail.stefvanschiedev.bfide.execution;
 
 import com.gmail.stefvanschiedev.bfide.psi.PsiElement;
-import com.gmail.stefvanschiedev.bfide.psi.PsiElementHolder;
 
 /**
- * The execution environment for this code
+ * The execution environment for this code. Single-use only: calling the
+ * {@link #execute()} method more than once will result in an exception.
+ * This class is <b>not</b> thread safe
  */
 public class CodeExecution {
 
     private final long[] cells;
-    private int pointer = 0;
+    private int pointer = 0; //-1 if the code has been executed
     private final RunConfiguration configuration;
-    private final PsiElementHolder holder;
+    private final PsiElement[] elements;
 
     /**
      * Creates a new code execution environment
      *
-     * @param configuration {@link #configuration}
+     * @param configuration the configuration used for the execution
+     * @param elements the elements from the source code
+     * (the array is not copied, therefore it mustn't be changed)
      */
-    public CodeExecution(RunConfiguration configuration, PsiElementHolder holder) {
+    public CodeExecution(RunConfiguration configuration, PsiElement[] elements) {
         cells = new long[configuration.getCellCount()];
         this.configuration = configuration;
-        this.holder = holder;
+        this.elements = elements;
     }
 
     /**
      * Executes the code
      */
     public void execute() {
-        for (PsiElement child : holder.getChildren())
+        if (pointer == -1)
+            throw new IllegalStateException("The execute method can only be called once");
+
+        for (PsiElement child : elements)
             pointer = child.execute(cells, pointer, configuration);
+
+        pointer = -1;
     }
 }
