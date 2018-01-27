@@ -9,7 +9,7 @@ import java.util.Queue;
 /**
  * Represent a looping structure in BrainFuck
  */
-public class PsiLoopElement extends PsiElement {
+public class PsiLoopElement extends PsiElement implements PsiElementHolder {
 
     private PsiElement[] children;
 
