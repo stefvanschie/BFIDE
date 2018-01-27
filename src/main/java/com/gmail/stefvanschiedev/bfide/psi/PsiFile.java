@@ -23,6 +23,6 @@ public class PsiFile extends File {
             e.printStackTrace();
         }
 
-        this.children = PsiElementFactory.INSTANCE.parseText(new String(bytes), 0, null);
+        this.children = PsiElementFactory.parseText(new String(bytes), 0, null);
     }
 }
