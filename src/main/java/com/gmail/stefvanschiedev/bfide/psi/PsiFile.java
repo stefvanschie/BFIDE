@@ -9,7 +9,7 @@ import java.nio.file.Files;
 /**
  * Represents a BrainFuck file which belongs to the PSI
  */
-public class PsiFile extends File implements PsiElementHolder {
+public class PsiFile extends File {
 
     private PsiElement[] children;
 
@@ -24,15 +24,5 @@ public class PsiFile extends File implements PsiElementHolder {
         }
 
         this.children = PsiElementFactory.INSTANCE.parseText(new String(bytes), 0, null);
-    }
-
-    @Override
-    public void setChildren(PsiElement[] children) {
-        this.children = children;
-    }
-
-    @Override
-    public PsiElement[] getChildren() {
-        return children;
     }
 }
