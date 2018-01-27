@@ -10,9 +10,10 @@ import com.gmail.stefvanschiedev.bfide.psi.PsiElement;
 public class CodeExecution {
 
     private final long[] cells;
-    private int pointer = 0; //-1 if the code has been executed
+    private int pointer = 0;
     private final RunConfiguration configuration;
     private final PsiElement[] elements;
+    private boolean executed;
 
     /**
      * Creates a new code execution environment
@@ -31,12 +32,12 @@ public class CodeExecution {
      * Executes the code
      */
     public void execute() {
-        if (pointer == -1)
+        if (executed)
             throw new IllegalStateException("The execute method can only be called once");
+
+        executed = true;
 
         for (PsiElement child : elements)
             pointer = child.execute(cells, pointer, configuration);
-
-        pointer = -1;
     }
 }

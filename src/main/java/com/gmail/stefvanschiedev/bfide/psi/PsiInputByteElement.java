@@ -38,7 +38,11 @@ public class PsiInputByteElement extends PsiElement {
         return ",";
     }
 
-    public static class Builder implements PsiBuilder<PsiInputByteElement> {
+    public static class Factory implements PsiFactory<PsiInputByteElement> {
+
+        public static final Factory INSTANCE = new Factory();
+
+        private Factory() {}
 
         @Override
         public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {

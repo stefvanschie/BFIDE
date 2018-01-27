@@ -10,18 +10,18 @@ import java.util.Queue;
  */
 public class PsiElementFactory {
 
-    public static final PsiElementFactory INSTANCE = new PsiElementFactory();
-
-    private final PsiBuilder<?>[] builders = new PsiBuilder<?>[] {
-            new PsiCommentElement.Builder(),
-            new PsiDecrementByteElement.Builder(),
-            new PsiDecrementPointerElement.Builder(),
-            new PsiIncrementByteElement.Builder(),
-            new PsiIncrementPointerElement.Builder(),
-            new PsiInputByteElement.Builder(),
-            new PsiLoopElement.Builder(),
-            new PsiOutputByteElement.Builder()
+    private static final PsiFactory<?>[] BUILDERS = new PsiFactory<?>[] {
+            PsiCommentElement.Factory.INSTANCE,
+            PsiDecrementByteElement.Factory.INSTANCE,
+            PsiDecrementPointerElement.Factory.INSTANCE,
+            PsiIncrementByteElement.Factory.INSTANCE,
+            PsiIncrementPointerElement.Factory.INSTANCE,
+            PsiInputByteElement.Factory.INSTANCE,
+            PsiLoopElement.Factory.INSTANCE,
+            PsiOutputByteElement.Factory.INSTANCE
     };
+
+    private PsiElementFactory() {}
 
     /**
      * Parses the text into the psi
@@ -31,12 +31,12 @@ public class PsiElementFactory {
      * @param parent the parent of the elements being parsed or null, if the element is top-level one
      * @return the newly parsed elements
      */
-    public PsiElement[] parseText(String text, int offset, @Nullable PsiElement parent) {
+    public static PsiElement[] parseText(String text, int offset, @Nullable PsiElement parent) {
         int prevLength = text.length();
         Queue<PsiElement> parsed = new LinkedList<>();
 
         while (!text.isEmpty()) {
-            for (PsiBuilder<?> builder : builders) {
+            for (PsiFactory<?> builder : BUILDERS) {
                 int length = builder.parse(text, offset, parent, parsed);
                 if (length == -1)
                     continue;
