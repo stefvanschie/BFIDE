@@ -5,7 +5,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
+/**
+ * Utility class for fxml files
+ */
 public class FXMLUtils {
+
     /**
      * @param name the name of the file to load (without the fxml extension) (path separator: '/')
      * @param controller the controller of the hierarchy being loaded or null, if none should be set
