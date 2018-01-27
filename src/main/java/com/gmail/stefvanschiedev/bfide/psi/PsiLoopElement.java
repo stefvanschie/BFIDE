@@ -37,7 +37,11 @@ public class PsiLoopElement extends PsiElement {
         return builder.append("]").toString();
     }
 
-    public static class Builder implements PsiBuilder<PsiLoopElement> {
+    public static class Factory implements PsiFactory<PsiLoopElement> {
+
+        public static final Factory INSTANCE = new Factory();
+
+        private Factory() {}
 
         @Override
         public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {
@@ -64,7 +68,7 @@ public class PsiLoopElement extends PsiElement {
                 PsiLoopElement element = new PsiLoopElement(new TextRange(offset, length), parent);
                 holder.add(element);
 
-                element.children = PsiElementFactory.INSTANCE.parseText(text.substring(1, length - 1),
+                element.children = PsiElementFactory.parseText(text.substring(1, length - 1),
                         offset + 1, element);
                 return length;
             }

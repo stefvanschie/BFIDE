@@ -9,7 +9,7 @@ import java.util.Queue;
  *
  * @param <T> the class it will build
  */
-public interface PsiBuilder<T extends PsiElement> {
+public interface PsiFactory<T extends PsiElement> {
     /**
      * Attempts to parse the text
      *

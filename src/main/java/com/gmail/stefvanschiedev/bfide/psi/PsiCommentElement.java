@@ -31,9 +31,12 @@ public class PsiCommentElement extends PsiElement {
         return comment;
     }
 
-    public static class Builder implements PsiBuilder<PsiCommentElement> {
+    public static class Factory implements PsiFactory<PsiCommentElement> {
 
+        public static final Factory INSTANCE = new Factory();
         private final Pattern pattern = Pattern.compile("[^><+\\-.,\\[\\]]+");
+
+        private Factory() {}
 
         @Override
         public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {

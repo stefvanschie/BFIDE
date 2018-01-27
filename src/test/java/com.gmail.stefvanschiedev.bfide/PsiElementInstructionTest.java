@@ -31,7 +31,7 @@ public class PsiElementInstructionTest {
      */
     private String execute(String code) {
         new CodeExecution(configuration,
-                PsiElementFactory.INSTANCE.parseText(code, 0, null))
+                PsiElementFactory.parseText(code, 0, null))
                 .execute();
 
         String string = new String(output.toByteArray(), charset);

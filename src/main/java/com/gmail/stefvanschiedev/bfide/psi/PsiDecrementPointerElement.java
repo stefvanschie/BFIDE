@@ -30,7 +30,11 @@ public class PsiDecrementPointerElement extends PsiElement {
         return "<";
     }
 
-    public static class Builder implements PsiBuilder<PsiDecrementPointerElement> {
+    public static class Factory implements PsiFactory<PsiDecrementPointerElement> {
+
+        public static final Factory INSTANCE = new Factory();
+
+        private Factory() {}
 
         @Override
         public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {
