@@ -21,6 +21,7 @@ public class FXMLUtils {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(BFIDE.class.getResource("/fxml/" + name + ".fxml"));
         loader.setControllerFactory((controllerClass) -> controller);
+        loader.setController(controller);
         return loader.load();
     }
 }
