@@ -16,6 +16,14 @@ public class SubmitFeedbackMenuItem extends MenuItem {
 
     private static URI uri = null;
 
+    static {
+        try {
+            uri = new URL("https://github.com/stefvanschie/BFIDE").toURI();
+        } catch (MalformedURLException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
     public SubmitFeedbackMenuItem() {
         super("Submit Feedback");
 
@@ -26,13 +34,5 @@ public class SubmitFeedbackMenuItem extends MenuItem {
                 e.printStackTrace();
             }
         });
-    }
-
-    static {
-        try {
-            uri = new URL("https://github.com/stefvanschie/BFIDE").toURI();
-        } catch (MalformedURLException | URISyntaxException e) {
-            e.printStackTrace();
-        }
     }
 }
