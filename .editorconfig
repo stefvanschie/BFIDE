@@ -2,4 +2,4 @@ root = true
 
 # Indentation override for all java files
 [**.java]
-insert_final_newline: true
+insert_final_newline = true
