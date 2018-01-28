@@ -19,6 +19,10 @@ public class Directory extends File {
         File[] childrenFiles = file.listFiles();
         if (childrenFiles != null) {
             for (File f : childrenFiles) {
+                //we don't want to show this folder in the tree
+                if (f.getName().equals(".bfide"))
+                   continue;
+
                 if (f.isDirectory())
                     children.add(new Directory(f));
                 else if (f.getName().endsWith(".b") || f.getName().endsWith(".bf"))
@@ -27,5 +31,9 @@ public class Directory extends File {
                     children.add(f);
             }
         }
+    }
+
+    public List<File> getChildren() {
+        return children;
     }
 }
