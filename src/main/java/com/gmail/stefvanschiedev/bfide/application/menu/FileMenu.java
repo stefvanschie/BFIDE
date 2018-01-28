@@ -2,6 +2,7 @@ package com.gmail.stefvanschiedev.bfide.application.menu;
 
 import com.gmail.stefvanschiedev.bfide.application.menu.file.ExitMenuItem;
 import com.gmail.stefvanschiedev.bfide.application.menu.file.NewMenu;
+import com.gmail.stefvanschiedev.bfide.application.menu.file.OpenMenuItem;
 import com.gmail.stefvanschiedev.bfide.application.stage.StartStage;
 import javafx.scene.control.Menu;
 import javafx.scene.control.SeparatorMenuItem;
@@ -15,6 +16,7 @@ public class FileMenu extends Menu {
         super("File");
 
         getItems().add(new NewMenu(stage));
+        getItems().add(new OpenMenuItem(stage));
 
         getItems().add(new SeparatorMenuItem());
 
