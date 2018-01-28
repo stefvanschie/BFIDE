@@ -1,4 +1,4 @@
-package com.gmail.stefvanschiedev.bfide.utils;
+package com.gmail.stefvanschiedev.bfide.psi;
 
 /**
  * Specifies a piece of text by its starting position and its length

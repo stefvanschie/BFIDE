@@ -1,7 +1,7 @@
 package com.gmail.stefvanschiedev.bfide.application.menu.file;
 
-import com.gmail.stefvanschiedev.bfide.Project;
-import com.gmail.stefvanschiedev.bfide.application.stage.StartStage;
+import com.gmail.stefvanschiedev.bfide.file.Project;
+import com.gmail.stefvanschiedev.bfide.application.stage.MainStage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.stage.DirectoryChooser;
@@ -13,7 +13,7 @@ import java.io.File;
  */
 public class OpenMenuItem extends MenuItem {
 
-    public OpenMenuItem(StartStage stage) {
+    public OpenMenuItem(MainStage stage) {
         super("Open");
 
         setOnAction(event -> {
@@ -33,7 +33,12 @@ public class OpenMenuItem extends MenuItem {
                 return;
             }
 
-            stage.getOpenProjects().add(new Project(directory.getName(), directory));
+            Project project = Project.create(directory, directory.getName());
+            if (project == null) {
+                //TODO handle
+            }
+
+            stage.getOpenProjects().add(project);
             stage.updateFileTree();
         });
     }

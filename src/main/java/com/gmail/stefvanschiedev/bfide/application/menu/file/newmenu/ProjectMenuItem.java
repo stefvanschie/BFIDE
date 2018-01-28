@@ -1,8 +1,8 @@
 package com.gmail.stefvanschiedev.bfide.application.menu.file.newmenu;
 
-import com.gmail.stefvanschiedev.bfide.Project;
-import com.gmail.stefvanschiedev.bfide.application.FXMLUtils;
-import com.gmail.stefvanschiedev.bfide.application.stage.StartStage;
+import com.gmail.stefvanschiedev.bfide.file.Project;
+import com.gmail.stefvanschiedev.bfide.application.util.FXMLUtils;
+import com.gmail.stefvanschiedev.bfide.application.stage.MainStage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 public class ProjectMenuItem extends MenuItem {
 
-    public ProjectMenuItem(StartStage stage) {
+    public ProjectMenuItem(MainStage stage) {
         super("Project");
 
         setOnAction(new EventHandler<ActionEvent>() {
