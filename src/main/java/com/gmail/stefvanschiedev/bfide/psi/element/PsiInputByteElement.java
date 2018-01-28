@@ -1,5 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi.element;
 
+import com.gmail.stefvanschiedev.bfide.execution.InstructionException;
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import com.gmail.stefvanschiedev.bfide.psi.PsiElement;
 import com.gmail.stefvanschiedev.bfide.psi.PsiFactory;
@@ -19,7 +20,7 @@ public class PsiInputByteElement extends PsiElement {
     }
 
     @Override
-    public int execute(long[] cells, int pointer, RunConfiguration configuration) {
+    public int execute(long[] cells, int pointer, RunConfiguration configuration) throws InstructionException {
         try {
             int input = configuration.getInput().read();
             if (configuration.getMaxCellValue() < 255) {
@@ -31,7 +32,7 @@ public class PsiInputByteElement extends PsiElement {
             cells[pointer] = input;
             return pointer;
         } catch (IOException e) {
-            throw new RuntimeException("Error while reading input", e);
+            throw new InstructionException("Error while reading input", this, e);
         }
     }
 

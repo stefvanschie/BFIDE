@@ -1,6 +1,7 @@
 package com.gmail.stefvanschiedev.bfide.file;
 
-import com.gmail.stefvanschiedev.bfide.psi.PsiFile;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,12 +12,26 @@ import java.util.List;
  */
 public class Directory extends File {
 
+    /**
+     * Loads an existing directory
+     *
+     * @param directory the directory to load
+     */
+    @Nullable
+    @Contract(pure = true)
+    public static Directory load(File directory) {
+        if (!directory.isDirectory())
+            return null;
+
+        return new Directory(directory);
+    }
+
     private final List<File> children = new ArrayList<>();
 
-    public Directory(File file) {
-        super(file.getPath());
+    protected Directory(File directory) {
+        super(directory.getPath());
 
-        File[] childrenFiles = file.listFiles();
+        File[] childrenFiles = directory.listFiles();
         if (childrenFiles == null)
             return;
 
@@ -25,12 +40,13 @@ public class Directory extends File {
             if (f.getName().equals(".bfide"))
                 continue;
 
+            File toAdd = null;
             if (f.isDirectory())
-                children.add(new Directory(f));
+                toAdd = Directory.load(f);
             else if (f.getName().endsWith(".b") || f.getName().endsWith(".bf"))
-                children.add(new PsiFile(f));
-            else
-                children.add(f);
+                toAdd = PsiFile.load(f);
+
+            children.add(toAdd == null ? f : toAdd);
         }
     }
 

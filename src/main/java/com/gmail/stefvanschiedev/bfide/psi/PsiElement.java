@@ -1,5 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
+import com.gmail.stefvanschiedev.bfide.execution.InstructionException;
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,6 +30,7 @@ public abstract class PsiElement {
      * @param pointer the pointer
      * @param configuration the run configuration
      * @return the new pointer (which can be the same as the pointer parameter)
+     * @throws InstructionException if an error happened while performing the instruction
      */
-    public abstract int execute(long[] cells, int pointer, RunConfiguration configuration);
+    public abstract int execute(long[] cells, int pointer, RunConfiguration configuration) throws InstructionException;
 }
