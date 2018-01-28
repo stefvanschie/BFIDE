@@ -1,7 +1,9 @@
-package com.gmail.stefvanschiedev.bfide.psi;
+package com.gmail.stefvanschiedev.bfide.psi.element;
 
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
-import com.gmail.stefvanschiedev.bfide.utils.TextRange;
+import com.gmail.stefvanschiedev.bfide.psi.PsiElement;
+import com.gmail.stefvanschiedev.bfide.psi.PsiFactory;
+import com.gmail.stefvanschiedev.bfide.psi.TextRange;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;

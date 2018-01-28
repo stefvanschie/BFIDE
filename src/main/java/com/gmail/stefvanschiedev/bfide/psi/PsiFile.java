@@ -11,7 +11,7 @@ import java.nio.file.Files;
  */
 public class PsiFile extends File {
 
-    private PsiElement[] children;
+    private PsiElement[] elements;
 
     public PsiFile(@NotNull File file) {
         super(file.getPath());
@@ -23,6 +23,6 @@ public class PsiFile extends File {
             e.printStackTrace();
         }
 
-        this.children = PsiElementFactory.parseText(new String(bytes), 0, null);
+        elements = PsiElementFactory.parseText(new String(bytes), 0, null);
     }
 }

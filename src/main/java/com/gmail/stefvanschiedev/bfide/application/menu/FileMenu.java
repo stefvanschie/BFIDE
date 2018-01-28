@@ -3,7 +3,7 @@ package com.gmail.stefvanschiedev.bfide.application.menu;
 import com.gmail.stefvanschiedev.bfide.application.menu.file.ExitMenuItem;
 import com.gmail.stefvanschiedev.bfide.application.menu.file.NewMenu;
 import com.gmail.stefvanschiedev.bfide.application.menu.file.OpenMenuItem;
-import com.gmail.stefvanschiedev.bfide.application.stage.StartStage;
+import com.gmail.stefvanschiedev.bfide.application.stage.MainStage;
 import javafx.scene.control.Menu;
 import javafx.scene.control.SeparatorMenuItem;
 
@@ -12,7 +12,7 @@ import javafx.scene.control.SeparatorMenuItem;
  */
 public class FileMenu extends Menu {
 
-    public FileMenu(StartStage stage) {
+    public FileMenu(MainStage stage) {
         super("File");
 
         getItems().add(new NewMenu(stage));

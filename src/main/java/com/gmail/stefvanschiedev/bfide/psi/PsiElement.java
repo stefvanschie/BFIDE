@@ -1,7 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
-import com.gmail.stefvanschiedev.bfide.utils.TextRange;
 import org.jetbrains.annotations.Nullable;
 
 /**

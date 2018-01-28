@@ -1,4 +1,4 @@
-package com.gmail.stefvanschiedev.bfide;
+package com.gmail.stefvanschiedev.bfide.file;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +13,7 @@ public class Project extends Directory {
 
     @NotNull private String name;
 
-    public Project(@NotNull String name, File file) {
+    private Project(File file, @NotNull String name) {
         super(file);
 
         this.name = name;
@@ -26,7 +26,7 @@ public class Project extends Directory {
      */
     @Nullable
     @Contract(pure = true)
-    public static Project create(File parent, String name) {
+    public static Project create(File parent, @NotNull String name) {
         File directory = new File(parent, name);
         if (!directory.mkdirs())
             return null;
@@ -36,6 +36,6 @@ public class Project extends Directory {
         if (!bfideDirectory.mkdirs())
             return null;
 
-        return new Project(name, directory);
+        return new Project(directory, name);
     }
 }

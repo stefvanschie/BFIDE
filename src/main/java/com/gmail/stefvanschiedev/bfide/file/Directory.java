@@ -1,4 +1,4 @@
-package com.gmail.stefvanschiedev.bfide;
+package com.gmail.stefvanschiedev.bfide.file;
 
 import com.gmail.stefvanschiedev.bfide.psi.PsiFile;
 

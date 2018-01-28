@@ -1,5 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
+import com.gmail.stefvanschiedev.bfide.psi.element.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;

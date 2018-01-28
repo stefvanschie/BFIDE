@@ -1,7 +1,7 @@
 package com.gmail.stefvanschiedev.bfide.application.menu.file;
 
 import com.gmail.stefvanschiedev.bfide.application.menu.file.newmenu.ProjectMenuItem;
-import com.gmail.stefvanschiedev.bfide.application.stage.StartStage;
+import com.gmail.stefvanschiedev.bfide.application.stage.MainStage;
 import javafx.scene.control.Menu;
 
 /**
@@ -9,7 +9,7 @@ import javafx.scene.control.Menu;
  */
 public class NewMenu extends Menu {
 
-    public NewMenu(StartStage stage) {
+    public NewMenu(MainStage stage) {
         super("New");
 
         getItems().add(new ProjectMenuItem(stage));

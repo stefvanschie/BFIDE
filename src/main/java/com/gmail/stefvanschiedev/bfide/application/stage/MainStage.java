@@ -1,8 +1,8 @@
 package com.gmail.stefvanschiedev.bfide.application.stage;
 
-import com.gmail.stefvanschiedev.bfide.Directory;
-import com.gmail.stefvanschiedev.bfide.Project;
-import com.gmail.stefvanschiedev.bfide.application.FXMLUtils;
+import com.gmail.stefvanschiedev.bfide.file.Directory;
+import com.gmail.stefvanschiedev.bfide.file.Project;
+import com.gmail.stefvanschiedev.bfide.application.util.FXMLUtils;
 import com.gmail.stefvanschiedev.bfide.application.menu.FileMenu;
 import com.gmail.stefvanschiedev.bfide.application.menu.HelpMenu;
 import com.gmail.stefvanschiedev.bfide.application.menu.ViewMenu;
@@ -23,18 +23,18 @@ import java.util.List;
 /**
  * Main stage for BFIDE
  */
-public class StartStage extends Stage {
+public class MainStage extends Stage {
 
     @FXML private MenuBar menuBar;
     @FXML private TreeView<File> treeView;
 
     private final List<Project> openProjects = new ArrayList<>();
 
-    public StartStage() throws IOException {
+    public MainStage() throws IOException {
         setTitle("BrainFuck IDE");
-        setScene(new Scene(FXMLUtils.loadFXML("start", this)));
+        setScene(new Scene(FXMLUtils.loadFXML("stage/main", this)));
         //logo by rubbaboy
-        getIcons().add(new Image(StartStage.class.getResourceAsStream("/icons/logo.png")));
+        getIcons().add(new Image(MainStage.class.getResourceAsStream("/icons/logo.png")));
     }
 
     @FXML

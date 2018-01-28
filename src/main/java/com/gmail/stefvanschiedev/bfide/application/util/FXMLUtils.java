@@ -1,5 +1,6 @@
-package com.gmail.stefvanschiedev.bfide.application;
+package com.gmail.stefvanschiedev.bfide.application.util;
 
+import com.gmail.stefvanschiedev.bfide.application.BFIDE;
 import javafx.fxml.FXMLLoader;
 import org.jetbrains.annotations.Nullable;
 
