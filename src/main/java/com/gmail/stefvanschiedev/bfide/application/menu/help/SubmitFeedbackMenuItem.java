@@ -27,6 +27,9 @@ public class SubmitFeedbackMenuItem extends MenuItem {
     public SubmitFeedbackMenuItem() {
         super("Submit Feedback");
 
+        if (uri == null)
+            return;
+
         setOnAction(event -> {
             try {
                 Desktop.getDesktop().browse(uri);

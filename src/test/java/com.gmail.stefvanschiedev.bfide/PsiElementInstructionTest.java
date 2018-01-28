@@ -1,6 +1,7 @@
 package com.gmail.stefvanschiedev.bfide;
 
 import com.gmail.stefvanschiedev.bfide.execution.CodeExecution;
+import com.gmail.stefvanschiedev.bfide.execution.InstructionException;
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import com.gmail.stefvanschiedev.bfide.psi.PsiElementFactory;
 import org.junit.Assert;
@@ -30,9 +31,13 @@ public class PsiElementInstructionTest {
      * @return the output of the code (can be an empty string, but won't null)
      */
     private String execute(String code) {
-        new CodeExecution(configuration,
-                PsiElementFactory.parseText(code, 0, null))
-                .execute();
+        try {
+            new CodeExecution(configuration,
+                    PsiElementFactory.parseText(code, 0, null))
+                    .execute();
+        } catch (InstructionException e) {
+            throw new RuntimeException(e);
+        }
 
         String string = new String(output.toByteArray(), charset);
         output.reset();

@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * A builder for JavaFX alerts. The default type is {@link Alert.AlertType#NONE}
  */
-public class AlertBuilder { //TODO actually use this
+public class AlertBuilder {
     private final Alert alert;
 
     public AlertBuilder() {

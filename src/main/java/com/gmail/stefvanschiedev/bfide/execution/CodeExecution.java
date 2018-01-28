@@ -31,7 +31,7 @@ public class CodeExecution {
     /**
      * Executes the code
      */
-    public void execute() {
+    public void execute() throws InstructionException {
         if (executed)
             throw new IllegalStateException("The execute method can only be called once");
 

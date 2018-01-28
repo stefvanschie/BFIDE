@@ -1,5 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi.element;
 
+import com.gmail.stefvanschiedev.bfide.execution.InstructionException;
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import com.gmail.stefvanschiedev.bfide.psi.PsiElement;
 import com.gmail.stefvanschiedev.bfide.psi.PsiElementFactory;
@@ -21,7 +22,7 @@ public class PsiLoopElement extends PsiElement {
     }
 
     @Override
-    public int execute(long[] cells, int pointer, RunConfiguration configuration) {
+    public int execute(long[] cells, int pointer, RunConfiguration configuration) throws InstructionException {
         while (cells[pointer] != 0) {
             for (PsiElement child : children)
                 pointer = child.execute(cells, pointer, configuration);

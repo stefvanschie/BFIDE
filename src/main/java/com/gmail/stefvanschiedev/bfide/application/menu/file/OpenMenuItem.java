@@ -1,10 +1,11 @@
 package com.gmail.stefvanschiedev.bfide.application.menu.file;
 
-import com.gmail.stefvanschiedev.bfide.file.Project;
 import com.gmail.stefvanschiedev.bfide.application.stage.MainStage;
+import com.gmail.stefvanschiedev.bfide.application.util.AlertBuilder;
+import com.gmail.stefvanschiedev.bfide.application.util.DirectoryChooserBuilder;
+import com.gmail.stefvanschiedev.bfide.file.Project;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
-import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 
@@ -17,25 +18,22 @@ public class OpenMenuItem extends MenuItem {
         super("Open");
 
         setOnAction(event -> {
-            DirectoryChooser chooser = new DirectoryChooser();
-            chooser.setTitle("Open project");
-            File directory = chooser.showDialog(null);
+            File directory = new DirectoryChooserBuilder()
+                    .setTitle("Open project")
+                    .showDialog(null);
 
             if (directory == null)
                 return; //dialog was cancelled
 
-            if (!new File(directory, ".bfide").exists()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Incorrect directory");
-                alert.setHeaderText(null);
-                alert.setContentText("Directory isn't a project");
-                alert.showAndWait();
-                return;
-            }
-
-            Project project = Project.create(directory, directory.getName());
+            Project project = Project.load(directory);
             if (project == null) {
-                //TODO handle
+                new AlertBuilder()
+                        .setType(Alert.AlertType.ERROR)
+                        .setTitle("Incorrect directory")
+                        .setHeaderText(null)
+                        .setContextText("Directory isn't a project")
+                        .showAndWait();
+                return;
             }
 
             stage.getOpenProjects().add(project);

@@ -1,6 +1,7 @@
 package com.gmail.stefvanschiedev.bfide.psi;
 
 import com.gmail.stefvanschiedev.bfide.psi.element.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
@@ -22,8 +23,6 @@ public class PsiElementFactory {
             PsiOutputByteElement.Factory.INSTANCE
     };
 
-    private PsiElementFactory() {}
-
     /**
      * Parses the text into the psi
      *
@@ -32,6 +31,7 @@ public class PsiElementFactory {
      * @param parent the parent of the elements being parsed or null, if the element is top-level one
      * @return the newly parsed elements
      */
+    @NotNull
     public static PsiElement[] parseText(String text, int offset, @Nullable PsiElement parent) {
         int prevLength = text.length();
         Queue<PsiElement> parsed = new LinkedList<>();
@@ -55,4 +55,6 @@ public class PsiElementFactory {
 
         return parsed.toArray(new PsiElement[parsed.size()]);
     }
+
+    private PsiElementFactory() {}
 }

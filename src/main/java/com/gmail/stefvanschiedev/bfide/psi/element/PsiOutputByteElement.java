@@ -1,5 +1,6 @@
 package com.gmail.stefvanschiedev.bfide.psi.element;
 
+import com.gmail.stefvanschiedev.bfide.execution.InstructionException;
 import com.gmail.stefvanschiedev.bfide.execution.RunConfiguration;
 import com.gmail.stefvanschiedev.bfide.psi.PsiElement;
 import com.gmail.stefvanschiedev.bfide.psi.PsiFactory;
@@ -20,7 +21,7 @@ public class PsiOutputByteElement extends PsiElement {
     }
 
     @Override
-    public int execute(long[] cells, int pointer, RunConfiguration configuration) {
+    public int execute(long[] cells, int pointer, RunConfiguration configuration) throws InstructionException {
         long value = cells[pointer];
         if (configuration.getMaxCellValue() < 255) {
             //The cell values are in the signed byte range,
@@ -35,7 +36,7 @@ public class PsiOutputByteElement extends PsiElement {
             output.flush();
             return pointer;
         } catch (IOException e) {
-            throw new RuntimeException("Error while writing output", e);
+            throw new InstructionException("Error while writing output", this, e);
         }
     }
 

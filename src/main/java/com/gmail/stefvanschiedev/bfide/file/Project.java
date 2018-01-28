@@ -11,18 +11,12 @@ import java.io.File;
  */
 public class Project extends Directory {
 
-    @NotNull private String name;
-
-    private Project(File file, @NotNull String name) {
-        super(file);
-
-        this.name = name;
-    }
-
     /**
      * Creates a new project from scratch
      *
-     * @return the new project
+     * @param parent the directory in which the project folder should be created
+     * @param name the name of the project
+     * @return the new project or null, if an error occurs
      */
     @Nullable
     @Contract(pure = true)
@@ -37,5 +31,28 @@ public class Project extends Directory {
             return null;
 
         return new Project(directory, name);
+    }
+
+    /**
+     * Loads an existing project
+     *
+     * @param directory the project's root directory
+     * @return the newly loaded project or null, if the directory is not a valid project folder
+     */
+    @Nullable
+    @Contract(pure = true)
+    public static Project load(File directory) {
+        if (!new File(directory, ".bfide").exists())
+            return null;
+
+        return new Project(directory, directory.getName());
+    }
+
+    @NotNull private String name;
+
+    private Project(File file, @NotNull String name) {
+        super(file);
+
+        this.name = name;
     }
 }

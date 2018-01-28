@@ -1,13 +1,14 @@
 package com.gmail.stefvanschiedev.bfide.application.menu.file.newmenu;
 
-import com.gmail.stefvanschiedev.bfide.file.Project;
-import com.gmail.stefvanschiedev.bfide.application.util.FXMLUtils;
 import com.gmail.stefvanschiedev.bfide.application.stage.MainStage;
+import com.gmail.stefvanschiedev.bfide.application.util.AlertBuilder;
+import com.gmail.stefvanschiedev.bfide.application.util.DirectoryChooserBuilder;
+import com.gmail.stefvanschiedev.bfide.application.util.FXMLUtils;
+import com.gmail.stefvanschiedev.bfide.file.Project;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,9 +31,11 @@ public class ProjectMenuItem extends MenuItem {
 
             @Override
             public void handle(ActionEvent event) {
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("New Project");
-                alert.setHeaderText(null);
+                alert = new AlertBuilder()
+                        .setType(Alert.AlertType.INFORMATION)
+                        .setTitle("New Project")
+                        .setHeaderText(null)
+                        .build();
 
                 try {
                     alert.setDialogPane(FXMLUtils.loadFXML("alerts/newproject", this));
@@ -47,11 +50,12 @@ public class ProjectMenuItem extends MenuItem {
 
                 Project project = Project.create(new File(projectLocation.getText()), projectName.getText());
                 if (project == null) {
-                    Alert error = new Alert(Alert.AlertType.ERROR);
-                    error.setTitle("Error");
-                    error.setHeaderText(null);
-                    error.setContentText("Unable to create project");
-                    error.showAndWait();
+                    new AlertBuilder()
+                            .setType(Alert.AlertType.ERROR)
+                            .setTitle("Error")
+                            .setHeaderText(null)
+                            .setContextText("Unable to create project")
+                            .showAndWait();
                     return;
                 }
 
@@ -62,9 +66,9 @@ public class ProjectMenuItem extends MenuItem {
             @FXML
             public void initialize() {
                 projectLocationButton.setOnMouseClicked(event -> {
-                    DirectoryChooser directoryChooser = new DirectoryChooser();
-                    directoryChooser.setTitle("Select project directory");
-                    File selectedDirectory = directoryChooser.showDialog(alert.getOwner());
+                    File selectedDirectory = new DirectoryChooserBuilder()
+                            .setTitle("Select Project Directory")
+                            .showDialog(alert.getOwner());
 
                     if (selectedDirectory == null)
                         return; //dialog was cancelled
