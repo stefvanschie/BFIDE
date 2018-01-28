@@ -21,6 +21,9 @@ public class OpenMenuItem extends MenuItem {
             chooser.setTitle("Open project");
             File directory = chooser.showDialog(null);
 
+            if (directory == null)
+                return; //dialog was cancelled
+
             if (!new File(directory, ".bfide").exists()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Incorrect directory");

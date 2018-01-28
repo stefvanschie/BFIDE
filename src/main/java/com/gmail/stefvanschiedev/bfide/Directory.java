@@ -11,25 +11,26 @@ import java.util.List;
  */
 public class Directory extends File {
 
-    private List<File> children = new ArrayList<>();
+    private final List<File> children = new ArrayList<>();
 
     public Directory(File file) {
         super(file.getPath());
 
         File[] childrenFiles = file.listFiles();
-        if (childrenFiles != null) {
-            for (File f : childrenFiles) {
-                //we don't want to show this folder in the tree
-                if (f.getName().equals(".bfide"))
-                   continue;
+        if (childrenFiles == null)
+            return;
 
-                if (f.isDirectory())
-                    children.add(new Directory(f));
-                else if (f.getName().endsWith(".b") || f.getName().endsWith(".bf"))
-                    children.add(new PsiFile(f));
-                else
-                    children.add(f);
-            }
+        for (File f : childrenFiles) {
+            //we don't want to show this folder in the tree
+            if (f.getName().equals(".bfide"))
+                continue;
+
+            if (f.isDirectory())
+                children.add(new Directory(f));
+            else if (f.getName().endsWith(".b") || f.getName().endsWith(".bf"))
+                children.add(new PsiFile(f));
+            else
+                children.add(f);
         }
     }
 

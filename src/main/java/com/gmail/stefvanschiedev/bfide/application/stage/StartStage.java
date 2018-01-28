@@ -14,12 +14,9 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +28,7 @@ public class StartStage extends Stage {
     @FXML private MenuBar menuBar;
     @FXML private TreeView<File> treeView;
 
-    private List<Project> openProjects = new ArrayList<>();
+    private final List<Project> openProjects = new ArrayList<>();
 
     public StartStage() throws IOException {
         setTitle("BrainFuck IDE");
@@ -83,10 +80,11 @@ public class StartStage extends Stage {
         TreeItem<File> item = new TreeItem<>(file);
         parent.getChildren().add(item);
 
-        if (file instanceof Directory) {
-            for (File child : ((Directory) file).getChildren())
-                updateFileTree(child, item);
-        }
+        if (!(file instanceof Directory))
+            return;
+
+        for (File child : ((Directory)file).getChildren())
+            updateFileTree(child, item);
     }
 
     public List<Project> getOpenProjects() {

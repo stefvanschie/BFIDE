@@ -66,6 +66,9 @@ public class ProjectMenuItem extends MenuItem {
                     directoryChooser.setTitle("Select project directory");
                     File selectedDirectory = directoryChooser.showDialog(alert.getOwner());
 
+                    if (selectedDirectory == null)
+                        return; //dialog was cancelled
+
                     projectLocation.setText(selectedDirectory.getPath());
                 });
             }
