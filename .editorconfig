@@ -1,5 +1,5 @@
 root = true
 
 # Indentation override for all java files
-[**.java]
+[*.java]
 insert_final_newline = true
