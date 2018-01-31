@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Queue;
+import java.util.List;
 
 /**
  * Represents an output byte instruction in BrainFuck
@@ -52,7 +52,7 @@ public class PsiOutputByteElement extends PsiElement {
         private Factory() {}
 
         @Override
-        public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {
+        public int parse(String text, int offset, @Nullable PsiElement parent, List<PsiElement> holder) {
             if (!text.startsWith("."))
                 return -1;
 

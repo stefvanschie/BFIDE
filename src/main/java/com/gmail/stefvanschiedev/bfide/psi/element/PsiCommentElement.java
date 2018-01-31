@@ -6,7 +6,7 @@ import com.gmail.stefvanschiedev.bfide.psi.PsiFactory;
 import com.gmail.stefvanschiedev.bfide.psi.TextRange;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Queue;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,7 +41,7 @@ public class PsiCommentElement extends PsiElement {
         private Factory() {}
 
         @Override
-        public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {
+        public int parse(String text, int offset, @Nullable PsiElement parent, List<PsiElement> holder) {
             Matcher matcher = pattern.matcher(text);
             if (!matcher.find() || matcher.start() != 0)
                 return -1;
