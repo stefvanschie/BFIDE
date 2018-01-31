@@ -2,7 +2,7 @@ package com.gmail.stefvanschiedev.bfide.psi;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Queue;
+import java.util.List;
 
 /**
  * A builder to build psi elements
@@ -19,5 +19,5 @@ public interface PsiFactory<T extends PsiElement> {
      * @param holder the holder of the element being parsed
      * @return the amount of characters removed from the start of the text or -1, if the text cannot be parsed
      */
-    int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder);
+    int parse(String text, int offset, @Nullable PsiElement parent, List<PsiElement> holder);
 }

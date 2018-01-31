@@ -6,7 +6,7 @@ import com.gmail.stefvanschiedev.bfide.psi.PsiFactory;
 import com.gmail.stefvanschiedev.bfide.psi.TextRange;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Queue;
+import java.util.List;
 
 /**
  * Represents a decrement pointer instruction in BrainFuck
@@ -39,7 +39,7 @@ public class PsiDecrementPointerElement extends PsiElement {
         private Factory() {}
 
         @Override
-        public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {
+        public int parse(String text, int offset, @Nullable PsiElement parent, List<PsiElement> holder) {
             if (!text.startsWith("<"))
                 return -1;
 

@@ -8,7 +8,7 @@ import com.gmail.stefvanschiedev.bfide.psi.PsiFactory;
 import com.gmail.stefvanschiedev.bfide.psi.TextRange;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Queue;
+import java.util.List;
 
 /**
  * Represent a looping structure in BrainFuck
@@ -48,7 +48,7 @@ public class PsiLoopElement extends PsiElement {
         private Factory() {}
 
         @Override
-        public int parse(String text, int offset, @Nullable PsiElement parent, Queue<PsiElement> holder) {
+        public int parse(String text, int offset, @Nullable PsiElement parent, List<PsiElement> holder) {
             if (!text.startsWith("["))
                 return -1;
 

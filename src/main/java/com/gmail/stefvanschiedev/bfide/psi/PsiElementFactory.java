@@ -4,8 +4,8 @@ import com.gmail.stefvanschiedev.bfide.psi.element.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A thread safe factory for parsing BrainFuck code into a psi
@@ -34,7 +34,7 @@ public class PsiElementFactory {
     @NotNull
     public static PsiElement[] parseText(String text, int offset, @Nullable PsiElement parent) {
         int prevLength = text.length();
-        Queue<PsiElement> parsed = new LinkedList<>();
+        List<PsiElement> parsed = new ArrayList<>(20);
 
         while (!text.isEmpty()) {
             for (PsiFactory<?> builder : BUILDERS) {
