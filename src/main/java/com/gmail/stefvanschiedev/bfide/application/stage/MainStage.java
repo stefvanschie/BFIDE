@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -79,6 +80,32 @@ public class MainStage extends Stage {
 
         treeView.setRoot(new TreeItem<>());
         treeView.setShowRoot(false);
+
+        //tab pane
+        tabPane.setOnContextMenuRequested((ContextMenuEvent event) -> {
+            ContextMenu contextMenu = new ContextMenu();
+
+            MenuItem close = new MenuItem("Close");
+            close.setOnAction(e -> tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedIndex()));
+            contextMenu.getItems().add(close);
+
+            if (tabPane.getTabs().size() > 1) {
+                MenuItem closeOthers = new MenuItem("Close others");
+                closeOthers.setOnAction(e -> {
+                    for (int i = 0; i < tabPane.getTabs().size(); i++) {
+                        if (tabPane.getSelectionModel().getSelectedIndex() != i)
+                            tabPane.getTabs().remove(i);
+                    }
+                });
+                contextMenu.getItems().add(closeOthers);
+            }
+
+            MenuItem closeAll = new MenuItem("Close all");
+            closeAll.setOnAction(e -> tabPane.getTabs().remove(0, tabPane.getTabs().size()));
+            contextMenu.getItems().add(closeAll);
+
+            tabPane.setContextMenu(contextMenu);
+        });
     }
 
     /**
