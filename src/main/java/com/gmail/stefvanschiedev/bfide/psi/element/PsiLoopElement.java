@@ -41,6 +41,10 @@ public class PsiLoopElement extends PsiElement {
         return builder.append("]").toString();
     }
 
+    public PsiElement[] getChildren() {
+        return children;
+    }
+
     public static class Factory implements PsiFactory<PsiLoopElement> {
 
         public static final Factory INSTANCE = new Factory();
@@ -69,12 +73,14 @@ public class PsiLoopElement extends PsiElement {
                 if (brackets != 0)
                     continue;
 
-                PsiLoopElement element = new PsiLoopElement(new TextRange(offset, length), parent);
+                int actualLength = (int) text.substring(1, length - 1).chars().filter(ch -> ch != '\r').count();
+
+                PsiLoopElement element = new PsiLoopElement(new TextRange(offset, offset + actualLength), parent);
                 holder.add(element);
 
                 element.children = PsiElementFactory.parseText(text.substring(1, length - 1),
                         offset + 1, element);
-                return length;
+                return actualLength;
             }
 
             return -1;
