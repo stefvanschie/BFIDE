@@ -13,7 +13,6 @@ import java.util.List;
 public class PsiElementFactory {
 
     private static final PsiFactory<?>[] BUILDERS = new PsiFactory<?>[] {
-            PsiCommentElement.Factory.INSTANCE,
             PsiDecrementByteElement.Factory.INSTANCE,
             PsiDecrementPointerElement.Factory.INSTANCE,
             PsiIncrementByteElement.Factory.INSTANCE,
@@ -42,13 +41,18 @@ public class PsiElementFactory {
                 if (length == -1)
                     continue;
 
+                offset += text.substring(0, length).chars().filter(ch -> ch != '\r').count();
                 text = text.substring(length);
-                offset += length;
                 break;
             }
 
-            if (prevLength == text.length())
-                throw new IllegalArgumentException("Incorrect text, unable to parse");
+            //if we can't read this character, just skip it
+            if (prevLength == text.length()) {
+                if (text.charAt(0) != '\r')
+                    offset++;
+
+                text = text.substring(1);
+            }
 
             prevLength = text.length();
         }

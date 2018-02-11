@@ -32,5 +32,9 @@ public abstract class PsiElement {
      * @return the new pointer (which can be the same as the pointer parameter)
      * @throws InstructionException if an error happened while performing the instruction
      */
-    public abstract int execute(long[] cells, int pointer, RunConfiguration configuration) throws InstructionException;
+    public abstract int execute(long[] cells, int pointer, RunConfiguration configuration);
+
+    public TextRange getTextRange() {
+        return range;
+    }
 }
