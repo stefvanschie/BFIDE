@@ -60,8 +60,6 @@ public class CodeTab extends Tab {
         Map<TextRange, String> map = new HashMap<>();
 
         for (PsiElement element : file.allChildren()) {
-            System.out.println(element.getTextRange().getStart());
-
             if (element instanceof PsiLoopElement) {
                 map.put(new TextRange(element.getTextRange().getStart(), element.getTextRange().getStart() + 1),
                         "green");

@@ -47,6 +47,7 @@ public class PsiElementFactory {
                 break;
             }
 
+            //if we can't read this character, just skip it
             if (prevLength == text.length()) {
                 if (text.charAt(0) != '\r')
                     offset++;
