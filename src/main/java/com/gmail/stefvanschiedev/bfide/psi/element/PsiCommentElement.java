@@ -46,9 +46,11 @@ public class PsiCommentElement extends PsiElement {
             if (!matcher.find() || matcher.start() != 0)
                 return -1;
 
-            holder.add(new PsiCommentElement(new TextRange(offset, offset + matcher.end()),
+            int actualLength = (int) text.substring(0, matcher.end()).chars().filter(ch -> ch != '\r').count();
+
+            holder.add(new PsiCommentElement(new TextRange(offset, offset + actualLength),
                     parent, text.substring(0, matcher.end())));
-            return matcher.end();
+            return actualLength;
         }
     }
 }

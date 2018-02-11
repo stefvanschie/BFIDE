@@ -1,18 +1,20 @@
 package com.gmail.stefvanschiedev.bfide.application.stage;
 
+import com.gmail.stefvanschiedev.bfide.application.CodeTab;
 import com.gmail.stefvanschiedev.bfide.file.Directory;
 import com.gmail.stefvanschiedev.bfide.file.Project;
 import com.gmail.stefvanschiedev.bfide.application.util.FXMLUtils;
 import com.gmail.stefvanschiedev.bfide.application.menu.FileMenu;
 import com.gmail.stefvanschiedev.bfide.application.menu.HelpMenu;
 import com.gmail.stefvanschiedev.bfide.application.menu.ViewMenu;
+import com.gmail.stefvanschiedev.bfide.file.PsiFile;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -27,12 +29,17 @@ public class MainStage extends Stage {
 
     @FXML private MenuBar menuBar;
     @FXML private TreeView<File> treeView;
+    @FXML private TabPane tabPane;
 
     private final List<Project> openProjects = new ArrayList<>();
 
     public MainStage() throws IOException {
         setTitle("BrainFuck IDE");
-        setScene(new Scene(FXMLUtils.loadFXML("stage/main", this)));
+
+        Scene scene = new Scene(FXMLUtils.loadFXML("stage/main", this));
+        scene.getStylesheets().add(MainStage.class.getResource("/highlighting.css").toExternalForm());
+        setScene(scene);
+
         //logo by rubbaboy
         getIcons().add(new Image(MainStage.class.getResourceAsStream("/icons/logo.png")));
     }
@@ -51,6 +58,20 @@ public class MainStage extends Stage {
                 super.updateItem(item, empty);
 
                 setText(empty || item == null ? "" : item.getName());
+            }
+        });
+
+        treeView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() != 2)
+                return;
+
+            Node node = event.getPickResult().getIntersectedNode();
+            // Accept clicks only on node cells, and not on empty spaces of the TreeView
+            if (node instanceof Text || (node instanceof TreeCell && ((TreeCell) node).getText() != null)) {
+                File file = treeView.getSelectionModel().getSelectedItem().getValue();
+
+                if (file instanceof PsiFile)
+                    openFile((PsiFile) file);
             }
         });
 
@@ -85,6 +106,10 @@ public class MainStage extends Stage {
 
         for (File child : ((Directory)file).getChildren())
             updateFileTree(child, item);
+    }
+
+    public void openFile(PsiFile file) {
+        tabPane.getTabs().add(new CodeTab(file));
     }
 
     public List<Project> getOpenProjects() {

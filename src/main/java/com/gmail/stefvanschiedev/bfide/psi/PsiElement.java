@@ -33,4 +33,8 @@ public abstract class PsiElement {
      * @throws InstructionException if an error happened while performing the instruction
      */
     public abstract int execute(long[] cells, int pointer, RunConfiguration configuration) throws InstructionException;
+
+    public TextRange getTextRange() {
+        return range;
+    }
 }

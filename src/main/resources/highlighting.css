@@ -1,0 +1,12 @@
+.green {
+    -fx-fill: green;
+}
+
+.blue {
+    -fx-fill: blue;
+}
+
+.comment {
+    -fx-fill: #408080;
+    -fx-font-style: italic;
+}
