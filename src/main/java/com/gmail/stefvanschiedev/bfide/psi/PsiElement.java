@@ -32,4 +32,8 @@ public abstract class PsiElement {
      * @return the new pointer (which can be the same as the pointer parameter)
      */
     public abstract int execute(long[] cells, int pointer, RunConfiguration configuration);
+
+    public TextRange getTextRange() {
+        return range;
+    }
 }
