@@ -1,6 +1,7 @@
 package com.gmail.stefvanschiedev.bfide.application.stage;
 
 import com.gmail.stefvanschiedev.bfide.application.CodeTab;
+import com.gmail.stefvanschiedev.bfide.application.menu.EditMenu;
 import com.gmail.stefvanschiedev.bfide.file.Directory;
 import com.gmail.stefvanschiedev.bfide.file.Project;
 import com.gmail.stefvanschiedev.bfide.application.util.FXMLUtils;
@@ -48,6 +49,7 @@ public class MainStage extends Stage {
     public void initialize() {
         //load menu bar
         menuBar.getMenus().add(new FileMenu(this));
+        menuBar.getMenus().add(new EditMenu(this));
         menuBar.getMenus().add(new ViewMenu(this));
         menuBar.getMenus().add(new HelpMenu());
 
@@ -110,6 +112,10 @@ public class MainStage extends Stage {
 
     public void openFile(PsiFile file) {
         tabPane.getTabs().add(new CodeTab(file));
+    }
+
+    public CodeTab getSelectedCodeTab() {
+        return (CodeTab) tabPane.getSelectionModel().getSelectedItem();
     }
 
     public List<Project> getOpenProjects() {

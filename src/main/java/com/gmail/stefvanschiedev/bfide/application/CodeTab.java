@@ -20,13 +20,14 @@ import java.util.*;
 public class CodeTab extends Tab {
 
     private PsiFile file;
+    private CodeArea codeArea;
 
     public CodeTab(PsiFile file) {
         this.file = file;
 
         setText(file.getName());
 
-        CodeArea codeArea = new CodeArea();
+        codeArea = new CodeArea();
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         try {
             codeArea.replaceText(0,0, new String(Files.readAllBytes(file.toPath())));
@@ -74,5 +75,9 @@ public class CodeTab extends Tab {
         }
 
         return map;
+    }
+
+    public CodeArea getCodeArea() {
+        return codeArea;
     }
 }
